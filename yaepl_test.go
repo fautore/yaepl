@@ -57,3 +57,13 @@ func Test_String(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, A{User: "user"}, a)
 }
+func Test_Uint(t *testing.T) {
+	t.Setenv("TEST_UINT", "10")
+	type A struct {
+		Num uint `yaepl:"key:TEST_UINT;required"`
+	}
+	var a A
+	err := Read(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Num: 10}, a)
+}

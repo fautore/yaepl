@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -60,6 +61,12 @@ func Read(destination any) error {
 		switch field.Type.Kind() {
 		case reflect.String:
 			field_value.SetString(field_env_value)
+		case reflect.Uint:
+			val, err := strconv.ParseUint(field_env_value, 10, 64)
+			if err != nil {
+				return err
+			}
+			field_value.SetUint(val)
 		}
 	}
 	return nil
