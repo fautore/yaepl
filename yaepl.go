@@ -67,6 +67,12 @@ func Read(destination any) error {
 				return err
 			}
 			field_value.SetUint(val)
+		case reflect.Int:
+			val, err := strconv.ParseInt(field_env_value, 10, 64)
+			if err != nil {
+				return err
+			}
+			field_value.SetInt(val)
 		}
 	}
 	return nil

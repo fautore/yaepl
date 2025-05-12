@@ -67,3 +67,13 @@ func Test_Uint(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: 10}, a)
 }
+func Test_Int(t *testing.T) {
+	t.Setenv("TEST_NUMBER", "-10")
+	type A struct {
+		Num int `yaepl:"key:TEST_NUMBER;required"`
+	}
+	var a A
+	err := Read(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Num: -10}, a)
+}
