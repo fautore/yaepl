@@ -77,3 +77,13 @@ func Test_Int(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: -10}, a)
 }
+func Test_Float32(t *testing.T) {
+	t.Setenv("TEST_FLOAT32", "-10.33")
+	type A struct {
+		Num float32 `yaepl:"key:TEST_FLOAT32;required"`
+	}
+	var a A
+	err := Read(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Num: -10.33}, a)
+}

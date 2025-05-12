@@ -73,6 +73,12 @@ func Read(destination any) error {
 				return err
 			}
 			field_value.SetInt(val)
+		case reflect.Float32:
+			val, err := strconv.ParseFloat(field_env_value, 32)
+			if err != nil {
+				return err
+			}
+			field_value.SetFloat(val)
 		}
 	}
 	return nil
