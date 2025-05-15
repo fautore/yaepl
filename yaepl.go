@@ -31,7 +31,7 @@ func parseTag(tag string) Tag {
 	return result
 }
 
-func Read(destination any) error {
+func Unmarshal(destination any) error {
 	v := reflect.ValueOf(destination)
 	if v.Kind() != reflect.Ptr || v.Elem().Kind() != reflect.Struct {
 		return fmt.Errorf("target must be a pointer to a struct")
@@ -55,7 +55,7 @@ func Read(destination any) error {
 		}
 		field_env_value := os.Getenv(tag.Key)
 		if tag.Required && field_env_value == "" {
-			return fmt.Errorf("Value of variable %v is required", tag.Key)
+			return fmt.Errorf("Required environment variable %s is not set", tag.Key)
 		}
 		field_value := v.Field(i)
 		switch field.Type.Kind() {

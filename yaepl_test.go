@@ -14,7 +14,7 @@ func Test_Read(t *testing.T) {
 		Password string `yaepl:"key:TEST_PASSWORD"`
 	}
 	var a A
-	Read(&a)
+	Unmarshal(&a)
 	assert.Equal(t, A{User: "user", Password: "pass"}, a)
 }
 func Test_ReadRequiredSet(t *testing.T) {
@@ -23,7 +23,7 @@ func Test_ReadRequiredSet(t *testing.T) {
 		User string `yaepl:"key:TEST_USER;required"`
 	}
 	var a A
-	Read(&a)
+	Unmarshal(&a)
 	assert.Equal(t, A{User: "user"}, a)
 }
 func Test_ReadRequiredUnset(t *testing.T) {
@@ -31,7 +31,7 @@ func Test_ReadRequiredUnset(t *testing.T) {
 		User string `yaepl:"key:TEST_USER;required"`
 	}
 	var a A
-	err := Read(&a)
+	err := Unmarshal(&a)
 	assert.Error(t, err)
 }
 func Test_ReadExportedField(t *testing.T) {
@@ -41,7 +41,7 @@ func Test_ReadExportedField(t *testing.T) {
 		notExported string `yaepl:"key:NOT_EXPORTED"`
 	}
 	var a A
-	err := Read(&a)
+	err := Unmarshal(&a)
 	assert.NoError(t, err)
 	assert.Equal(t, A{Exported: "exported"}, a)
 }
@@ -53,7 +53,7 @@ func Test_String(t *testing.T) {
 		User string `yaepl:"key:TEST_USER;required"`
 	}
 	var a A
-	err := Read(&a)
+	err := Unmarshal(&a)
 	assert.NoError(t, err)
 	assert.Equal(t, A{User: "user"}, a)
 }
@@ -63,7 +63,7 @@ func Test_Uint(t *testing.T) {
 		Num uint `yaepl:"key:TEST_UINT;required"`
 	}
 	var a A
-	err := Read(&a)
+	err := Unmarshal(&a)
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: 10}, a)
 }
@@ -73,7 +73,7 @@ func Test_Int(t *testing.T) {
 		Num int `yaepl:"key:TEST_NUMBER;required"`
 	}
 	var a A
-	err := Read(&a)
+	err := Unmarshal(&a)
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: -10}, a)
 }
@@ -83,7 +83,7 @@ func Test_Float32(t *testing.T) {
 		Num float32 `yaepl:"key:TEST_FLOAT32;required"`
 	}
 	var a A
-	err := Read(&a)
+	err := Unmarshal(&a)
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: -10.33}, a)
 }
