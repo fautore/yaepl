@@ -79,6 +79,12 @@ func Unmarshal(destination any) error {
 				return err
 			}
 			field_value.SetFloat(val)
+		case reflect.Float64:
+			val, err := strconv.ParseFloat(field_env_value, 64)
+			if err != nil {
+				return err
+			}
+			field_value.SetFloat(val)
 		}
 	}
 	return nil

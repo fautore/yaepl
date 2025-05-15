@@ -87,3 +87,13 @@ func Test_Float32(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: -10.33}, a)
 }
+func Test_Float64(t *testing.T) {
+	t.Setenv("TEST_FLOAT64", "3.14e+50")
+	type A struct {
+		Num float64 `yaepl:"key:TEST_FLOAT64;required"`
+	}
+	var a A
+	err := Unmarshal(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Num: 3.14e+50}, a)
+}
