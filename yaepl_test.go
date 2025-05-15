@@ -97,3 +97,27 @@ func Test_Float64(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, A{Num: 3.14e+50}, a)
 }
+func Test_Bool(t *testing.T) {
+	type A struct {
+		Bool bool `yaepl:"key:TEST_BOOL;required"`
+	}
+	var a A
+	t.Setenv("TEST_BOOL", "true")
+	err := Unmarshal(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Bool: true}, a)
+
+	t.Setenv("TEST_BOOL", "false")
+	err = Unmarshal(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Bool: false}, a)
+
+	t.Setenv("TEST_BOOL", "t")
+	err = Unmarshal(&a)
+	assert.NoError(t, err)
+	assert.Equal(t, A{Bool: true}, a)
+
+	t.Setenv("TEST_BOOL", "foobar")
+	err = Unmarshal(&a)
+	assert.Error(t, err)
+}

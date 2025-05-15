@@ -59,8 +59,12 @@ func Unmarshal(destination any) error {
 		}
 		field_value := v.Field(i)
 		switch field.Type.Kind() {
-		case reflect.String:
-			field_value.SetString(field_env_value)
+		case reflect.Bool:
+			val, err := strconv.ParseBool(field_env_value)
+			if err != nil {
+				return err
+			}
+			field_value.SetBool(val)
 		case reflect.Uint:
 			val, err := strconv.ParseUint(field_env_value, 10, 64)
 			if err != nil {
@@ -85,6 +89,10 @@ func Unmarshal(destination any) error {
 				return err
 			}
 			field_value.SetFloat(val)
+		case reflect.String:
+			field_value.SetString(field_env_value)
+		default:
+			return fmt.Errorf("Unsupported type %s", field.Type.Kind().String())
 		}
 	}
 	return nil
